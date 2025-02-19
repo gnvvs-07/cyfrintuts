@@ -8,20 +8,17 @@ pragma solidity  0.8.19; //version information
 
 // contract
 contract SimpleStorage {
-    uint256 public myNum;
-    function store(uint256 _favNum) public{
-        myNum = _favNum;
+    // arrays and struct
+    uint256[] arrayData;
+    // struct : personalize our custom data type
+    struct Person{      // type : Person
+        // empty structs are not allowed
+        uint256 age;
+        string name;
     }
-    // 0xd9145CCE52D386f254917e481eB44e9943F39138
-    // view,pure - read state from the chain(DOESNOT REQUIRE ANY GAS)
-    // store - updates state 
-
-    // ERROR
-    // function store(uint256 _favNum) view public{
-    //     myNum = _favNum;
-    // }
-
-    function retrieve() public view returns (uint256) { //it costs some gas b/z it's associated with store 
-        return myNum;
-    }
+    // creating a Person variable
+    Person public Collegue = Person(30,"Ava");
+    // or
+    Person public Collegue2 = Person({age:22,name:"John"});
+    
 }
