@@ -8,18 +8,25 @@ pragma solidity  0.8.19; //version information
 
 // contract
 contract SimpleStorage {
-    // arrays and struct
-    
-    // Dynamic array - length is dynamic
-    uint256[] arrayData;
-    // Stateic array - length = 6
-    uint256[6] arrayDataStatic;
 
-    struct Person{      // type : Person
-        // empty structs are not allowed
-        uint256 age;
+    // arrays and struct
+    struct Person{
         string name;
+        uint256 age;
     }
+
     // defining arrays for struct
     Person [] public listOfCollegues;
+
+    // Method - 1:
+    function addPerson(string memory name , uint256 age) public {
+        Person memory Friend = Person(name,age);
+        // push the created person to the list
+        listOfCollegues.push(Friend);   // items will be added from the 0 index
+    }
+
+    // Method - 2:
+    function addPersonType2(string memory name , uint256 age) public {
+        listOfCollegues.push(Person(name,age));
+    }
 }
