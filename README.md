@@ -6,3 +6,8 @@
 
 > ChainLink :
   https://chainlist.org/?search=zksy&testnets=true
+
+
+> ZkSync explorer
+  https://sepolia.explorer.zksync.io
+
