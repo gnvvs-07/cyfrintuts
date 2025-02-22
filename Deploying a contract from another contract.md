@@ -6,7 +6,26 @@
 
 ```solidity
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.19;
+
+import {SimpleStorage} from "./SimpleStorage.sol";  //Destructuring the contracts import
+
+contract StorageFactory{
+        // creating a variable for SimpleStorage contract
+        SimpleStorage public simpleStorage; // variable name is simpleStorage (small `s`) blue
+        function createSimpleStorageContract() public {         // oragne
+            simpleStorage = new SimpleStorage();                // blue
+        }
+}
+
+```
+
+### SimpleStorage contract
+
+```solidity
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.19;
 
 contract SimpleStorage {
     uint256 myFavoriteNumber;
@@ -15,8 +34,9 @@ contract SimpleStorage {
         uint256 favoriteNumber;
         string name;
     }
-
+    // uint256[] public anArray;
     Person[] public listOfPeople;
+
     mapping(string => uint256) public nameToFavoriteNumber;
 
     function store(uint256 _favoriteNumber) public virtual {
@@ -32,10 +52,8 @@ contract SimpleStorage {
         nameToFavoriteNumber[_name] = _favoriteNumber;
     }
 }
-contract StorageFactory {
-    SimpleStorage public simpleStorage; 
 
-    function createSimpleStorageContract() public {         
-        simpleStorage = new SimpleStorage();                
-    }
-}
+contract SimepleStorage2 {}
+
+contract SimepleStorage3 {}
+```
