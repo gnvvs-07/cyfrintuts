@@ -14,7 +14,7 @@ contract SimpleStorage {
 
     mapping(string => uint256) public nameToFavoriteNumber;
 
-    function store(uint256 _favoriteNumber) public virtual {
+    function store(uint256 _favoriteNumber) public virtual {    //this virtual keyword is necessary for override functionality
         myFavoriteNumber = _favoriteNumber;
     }
 
