@@ -23,5 +23,7 @@ contract FundMe {
             address funder = funders[funderIndex];
             addressToAmountFunded[funder] = 0;
         }
+        // resetting the funders 
+        funders = new address[](0);
     }
 }
