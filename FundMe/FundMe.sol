@@ -1,13 +1,30 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 contract FundMe {
-    // for funding
-    uint256 public myValue   = 1;
     function fund() public payable {
-        // Here if the value send is less than 1ETH myValue remains as 1 but gas will still be spent since its executing the myValue and fund 
-        myValue = myValue+1;
         require(msg.value > 1e18,"Didnot send enough tokens");
     }
     // for withdraawing
     function withdraw() public {}
+    function getPrice() public view returns (uint256){
+        // address and ABI
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+        (,int256 price,,,) = priceFeed.latestRoundData();
+        return uint256(price*1e18);
+        
+    }
 }
+
+//Recently changed  Data Feeds not include in the code 
+ function getChainlinkDataFeedLatestAnswer() public view returns (int) {
+        // prettier-ignore
+        (
+            /* uint80 roundID */,
+            int answer,
+            /*uint startedAt*/,
+            /*uint timeStamp*/,
+            /*uint80 answeredInRound*/
+        ) = dataFeed.latestRoundData();
+        return answer;
+    }
