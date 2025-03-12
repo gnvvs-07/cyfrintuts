@@ -14,6 +14,14 @@ contract FundMe {
     function fund() public payable {
         require(msg.value.getConversionRate() >= minimumUsd,"Didnot send enough ETH");
         funders.push(msg.sender);
-        addressToAmountFunded[msg.sender] = addressToAmountFunded[msg.sender]+ msg.value;
+        addressToAmountFunded[msg.sender] += msg.value;
+    }
+    // for withdawing money 
+    function withdraw() public{
+        // for (/*starting index , ending index,  increment*/){}
+        for(uint256 funderIndex = 0;funderIndex<funders.length;funderIndex++){
+            address funder = funders[funderIndex];
+            addressToAmountFunded[funder] = 0;
+        }
     }
 }
