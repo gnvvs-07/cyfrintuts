@@ -5,6 +5,8 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
 contract FundMe {
 
     uint256 public minimumUsd = 5e18;
+    address[] public funders;
+    mapping(address funder => uint256 amountFunded) public addressToAmountFunded;
 
     AggregatorV3Interface private immutable priceFeed;
     
@@ -16,6 +18,8 @@ contract FundMe {
 
     function fund() public payable {
         require(getConversionRate(msg.value) >= minimumUsd,"Didnot send enough ETH");
+        funders.push(msg.sender);
+        addressToAmountFunded[msg.sender] = addressToAmountFunded[msg.sender]+ msg.value;
     }
 
     function getPrice() public view returns (uint256){
