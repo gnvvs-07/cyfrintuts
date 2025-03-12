@@ -1,0 +1,14 @@
+### Safe math : in js VM
+
+```solidity
+
+pragma ^0.6.0;
+contract SafeMath{
+  uint256 public bigNumber = 255 ; //unchecked before 0.6
+  //after 0.6 versions the variables is checked 
+  function add () public{
+    bigNumber += 1;
+  }
+}
+
+```
