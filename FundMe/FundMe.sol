@@ -25,5 +25,18 @@ contract FundMe {
         }
         // resetting the funders 
         funders = new address[](0);
+        // sending ETH from contracts
+        // 1. transfer
+        payable(msg.sender).transfer(address(this).balance); //making the type from address to payable for transactions
+        // 2. send
+        bool sendSuccess = payable (msg.sender).send(address(this).balance);
+        require(sendSuccess, "failed to send ETH");
+        // 3. call
+        // (bool callSuccess,bytes memory dataReturned) = payable(msg.sender).call{value : address(this).balance}("");
+        (bool callSuccess,) = payable(msg.sender).call{value : address(this).balance}("");
+        require(callSuccess,"Call failed");
+        
     }
+
+
 }
