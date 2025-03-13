@@ -3,6 +3,8 @@ pragma solidity ^0.8.19;
 
 import {PriceConverter} from "./PriceConverter.sol";
 
+error NotOwner();
+
 contract FundMe {
 
     uint256 public minimumUsd = 5e18;
@@ -15,6 +17,7 @@ contract FundMe {
     constructor(){
         owner = msg.sender;
     }
+
     
     function fund() public payable {
         require(msg.value.getConversionRate() >= minimumUsd,"Didnot send enough ETH");
@@ -24,7 +27,10 @@ contract FundMe {
 
     // modifier
     modifier onlyOwner(){
-        require(msg.sender == owner,"Must be owner to withdraw");
+        // require(msg.sender == owner,"Must be owner to withdraw");
+        if(msg.sender!=owner){
+            revert NotOwner();
+        }
         _;      //can be anything after this line 
     }
 
