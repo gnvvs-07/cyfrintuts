@@ -10,14 +10,27 @@ contract FundMe {
     mapping(address funder => uint256 amountFunded) public addressToAmountFunded;
 
     using PriceConverter for uint256;
+    address public owner;
+
+    constructor(){
+        owner = msg.sender;
+    }
     
     function fund() public payable {
         require(msg.value.getConversionRate() >= minimumUsd,"Didnot send enough ETH");
         funders.push(msg.sender);
         addressToAmountFunded[msg.sender] += msg.value;
     }
+
+    // modifier
+    modifier onlyOwner(){
+        require(msg.sender == owner,"Must be owner to withdraw");
+        _;      //can be anything after this line 
+    }
+
     // for withdawing money 
-    function withdraw() public{
+    function withdraw() public onlyOwner{
+        
         // for (/*starting index , ending index,  increment*/){}
         for(uint256 funderIndex = 0;funderIndex<funders.length;funderIndex++){
             address funder = funders[funderIndex];
@@ -25,14 +38,7 @@ contract FundMe {
         }
         // resetting the funders 
         funders = new address[](0);
-        // sending ETH from contracts
-        // 1. transfer
-        payable(msg.sender).transfer(address(this).balance); //making the type from address to payable for transactions
-        // 2. send
-        bool sendSuccess = payable (msg.sender).send(address(this).balance);
-        require(sendSuccess, "failed to send ETH");
-        // 3. call
-        // (bool callSuccess,bytes memory dataReturned) = payable(msg.sender).call{value : address(this).balance}("");
+        //  call
         (bool callSuccess,) = payable(msg.sender).call{value : address(this).balance}("");
         require(callSuccess,"Call failed");
         
